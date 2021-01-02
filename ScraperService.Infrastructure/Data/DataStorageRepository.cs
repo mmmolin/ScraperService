@@ -12,18 +12,28 @@ namespace ScraperService.Infrastructure.Data
     public class DataStorageRepository : IStorageRepository
     {
         private IMongoClient client;
+        private IMongoDatabase database;
+        private IMongoCollection<ScrapeData> collection;
         public DataStorageRepository(IMongoClient client)
         {
             this.client = client;
+            database = this.client.GetDatabase("storage");
+            collection = database.GetCollection<ScrapeData>("scrapedata");
         }
         public void AddData(List<ScrapeData> entities)
         {
-            throw new NotImplementedException();
+            collection.InsertMany(entities);
         }
 
         public List<ScrapeData> GetDailyData()
         {
-            throw new NotImplementedException();
+            //var filter = Builders<ScrapeData>.Filter.Eq("Registered", DateTime.Now.Date.ToString());
+            var filter = Builders<ScrapeData>.Filter.Gte("Registered", DateTime.Now.Date) & 
+                Builders<ScrapeData>.Filter.Lt("Registered", DateTime.Now.AddDays(1).Date);
+
+            var entities = collection.Find(filter).ToList();
+
+            return entities;
         }
     }
 }

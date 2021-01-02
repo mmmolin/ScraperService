@@ -23,7 +23,7 @@ namespace ScraperService.Infrastructure.Data
             {
                 if (!String.IsNullOrEmpty(node.InnerText) && !String.IsNullOrEmpty(node.GetAttributeValue("href", String.Empty)))
                 {
-                    var data = new ScrapeData(node.InnerText, node.GetAttributeValue("href", String.Empty));
+                    var data = new ScrapeData(node.InnerText, node.GetAttributeValue("href", String.Empty), DateTime.Now);
                     scrapedData.Add(data);
                 }
                 else
