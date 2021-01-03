@@ -4,8 +4,6 @@ using ScraperService.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScraperService.Infrastructure.Data
 {
@@ -22,16 +20,40 @@ namespace ScraperService.Infrastructure.Data
         }
         public void AddData(List<ScrapeData> entities)
         {
-            collection.InsertMany(entities);
+            List<ScrapeData> newEntities = RemoveExistingData(entities);
+            if(newEntities.Count() > 0)
+            {
+                collection.InsertMany(newEntities);
+            }
+        }
+
+        private List<ScrapeData> RemoveExistingData(List<ScrapeData> entities)
+        {
+            var filteredEntities = new List<ScrapeData>();
+            foreach (var entity in entities)
+            {
+                if(IsNewData(entity))
+                {
+                    filteredEntities.Add(entity);
+                }
+            }
+
+            return filteredEntities;
+        }
+
+        private bool IsNewData(ScrapeData entity)
+        {
+            var filter = Builders<ScrapeData>.Filter.Eq("Url", entity.Url);
+            bool isNewData = collection.Find<ScrapeData>(filter).Limit(1).CountDocuments() == 0;
+            return isNewData;
         }
 
         public List<ScrapeData> GetDailyData()
         {
-            //var filter = Builders<ScrapeData>.Filter.Eq("Registered", DateTime.Now.Date.ToString());
-            var filter = Builders<ScrapeData>.Filter.Gte("Registered", DateTime.Now.Date) & 
+            var filter = Builders<ScrapeData>.Filter.Gte("Registered", DateTime.Now.Date) &
                 Builders<ScrapeData>.Filter.Lt("Registered", DateTime.Now.AddDays(1).Date);
 
-            var entities = collection.Find(filter).ToList();
+            List<ScrapeData> entities = collection.Find(filter).ToList();
 
             return entities;
         }
