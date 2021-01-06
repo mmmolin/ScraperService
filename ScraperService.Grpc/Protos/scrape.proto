@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+//option csharp_namespace = "ScraperService.Grpc.Protos";
+option csharp_namespace = "ScraperService.Grpc.Protos";
+
+package scrape;
+
+service Scrape {
+	rpc RunService (ScrapeRequest) returns (ScrapeReply);
+}
+
+message ScrapeRequest {}
+
+message ScrapeReply {}
