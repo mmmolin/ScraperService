@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Driver;
+using ScraperService.Core.Interfaces;
 using ScraperService.Grpc.Services;
+using ScraperService.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +21,9 @@ namespace ScraperService.Grpc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+            services.AddSingleton<IMongoClient, MongoClient>();
+            services.AddScoped<IScrapeRepository, ScrapeRepository>();
+            services.AddScoped<IStorageRepository, IStorageRepository>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
