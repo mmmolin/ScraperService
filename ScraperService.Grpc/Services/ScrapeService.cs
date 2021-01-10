@@ -23,15 +23,23 @@ namespace ScraperService.Grpc.Services
             try
             {
                 List<ScrapeData> scrapedData = scrapeRepository.GetTheMorningDewData();
-                // Guard clause, don't run if list is empty
-                storageRepository.AddData(scrapedData);
+                if (CollectionHasData(scrapedData))
+                {
+                    storageRepository.AddData(scrapedData);
+                }
             }
             catch
             {
                 // Log
             }
-            
-            return base.RunService(request, context);
+
+            return Task.FromResult(new ScrapeReply() { });
+            //return base.RunService(request, context);
+        }
+
+        private bool CollectionHasData<T>(IEnumerable<T> collection)
+        {
+            return collection != null && collection.Any();
         }
     }
 }
