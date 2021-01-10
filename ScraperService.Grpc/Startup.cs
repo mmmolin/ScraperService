@@ -23,7 +23,7 @@ namespace ScraperService.Grpc
             services.AddGrpc();
             services.AddSingleton<IMongoClient, MongoClient>();
             services.AddScoped<IScrapeRepository, ScrapeRepository>();
-            services.AddScoped<IStorageRepository, IStorageRepository>(); 
+            services.AddScoped<IStorageRepository, DataStorageRepository>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
