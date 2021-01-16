@@ -32,7 +32,7 @@ namespace ScraperService.Infrastructure.Data
             var filteredEntities = new List<ScrapeData>();
             foreach (var entity in entities)
             {
-                if(IsNewData(entity))
+                if(IsNewData(entity) && IsValidURL(entity))
                 {
                     filteredEntities.Add(entity);
                 }
@@ -46,6 +46,13 @@ namespace ScraperService.Infrastructure.Data
             var filter = Builders<ScrapeData>.Filter.Eq("Url", entity.Url);
             bool isNewData = collection.Find<ScrapeData>(filter).Limit(1).CountDocuments() == 0;
             return isNewData;
+        }
+
+        private bool IsValidURL(ScrapeData entity)
+        {
+            Uri uriResult;
+            return Uri.TryCreate(entity.Url, UriKind.Absolute, out uriResult) &&
+                uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps;
         }
 
         public List<ScrapeData> GetDailyData()
