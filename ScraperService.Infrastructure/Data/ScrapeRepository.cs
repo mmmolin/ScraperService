@@ -15,6 +15,9 @@ namespace ScraperService.Infrastructure.Data
         }
         public List<ScrapeData> GetTheMorningDewData()
         {
+            //MOMA#Test# >>
+            Console.WriteLine("hit!");
+            //MOMA# <<
             var url = @"https://www.alvinashcraft.com/";
             var htmlDoc = web.Load(url);
             var nodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='entry-content']/ul[1]/li/a[@href]");
