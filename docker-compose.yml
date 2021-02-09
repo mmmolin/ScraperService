@@ -3,6 +3,16 @@ version: "3.8"
 services:
   scraperservice:
     build: .
+    container_name: "scraperservice"
     ports:
     - "5001:5001"
+    environment: 
+    - ASPNETCORE_URLS=http://+:5001
     
+  workerservice:
+    image: "worker-service"
+    container_name: "workerservice"
+    ports:
+    - "5000:5000"
+    depends_on:
+      - "scraperservice"
