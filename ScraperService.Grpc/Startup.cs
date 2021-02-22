@@ -21,7 +21,7 @@ namespace ScraperService.Grpc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
-            services.AddSingleton<IMongoClient, MongoClient>();
+            services.AddSingleton<IMongoClient, MongoClient>(mongodb => new MongoClient("mongodb://mongoservice:27017"));
             services.AddScoped<IScrapeRepository, ScrapeRepository>();
             services.AddScoped<IStorageRepository, DataStorageRepository>(); 
         }
