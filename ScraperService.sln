@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperService.Core", "Scra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrapeService.Console", "ScrapeService.Console\ScrapeService.Console.csproj", "{8F37C6AE-D865-4E5E-9F95-8ED9A9ED17E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScraperService.Grpc", "ScraperService.Grpc\ScraperService.Grpc.csproj", "{94964A3D-5FCF-438B-96CC-D5C945CDF870}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperService.Grpc", "ScraperService.Grpc\ScraperService.Grpc.csproj", "{94964A3D-5FCF-438B-96CC-D5C945CDF870}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

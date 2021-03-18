@@ -21,7 +21,8 @@ namespace ScraperService.Infrastructure.Data
         public void AddData(List<ScrapeData> entities)
         {
             List<ScrapeData> newEntities = RemoveExistingData(entities);
-            if(newEntities.Count() > 0)
+            
+            if(newEntities.Count > 0)
             {
                 collection.InsertMany(newEntities);
             }
