@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "ScraperService.Grpc.Protos";
+
+package mail;
+
+service Mail {
+	rpc GetMail (MailRequest) returns (MailReply);
+}
+
+message MailRequest {}
+
+message MailReply {
+	repeated ScrapeDataReply Links = 1;
+}
+
+message ScrapeDataReply {
+	string Title = 1;
+	string Url = 2;
+}

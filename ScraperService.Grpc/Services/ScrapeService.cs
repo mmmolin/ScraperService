@@ -28,9 +28,9 @@ namespace ScraperService.Grpc.Services
                     storageRepository.AddData(scrapedData);
                 }
             }
-            catch
+            catch(Exception e)
             {
-                // Log
+                Console.WriteLine($"{e}");
             }
 
             return Task.FromResult(new ScrapeReply() { });
