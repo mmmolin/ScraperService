@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using ScraperService.Core.Entities;
 using ScraperService.Core.Interfaces;
 using ScraperService.Grpc.Services;
 using ScraperService.Infrastructure.Data;
@@ -29,7 +30,10 @@ namespace ScraperService.Grpc
             services.AddGrpc();
             services.AddSingleton<IMongoClient, MongoClient>(mongodb => new MongoClient("mongodb://localhost:27017"));
             services.AddScoped<IScrapeRepository, ScrapeRepository>();
-            services.AddScoped<IStorageRepository, DataStorageRepository>(); 
+            services.AddScoped<IStorageRepository, DataStorageRepository>();
+
+            // Options
+            services.Configure<ScrapeDataSettings>("TheMorningDew", configuration.GetSection("ScrapeDataSettings:TheMorningDew"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

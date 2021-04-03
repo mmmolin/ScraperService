@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.Extensions.Options;
 using ScraperService.Core.Entities;
 using ScraperService.Core.Interfaces;
 using System;
@@ -8,16 +9,18 @@ namespace ScraperService.Infrastructure.Data
 {
     public class ScrapeRepository : IScrapeRepository
     {
+        private readonly ScrapeDataSettings theMorningDewSettings;
         private HtmlWeb web;
-        public ScrapeRepository()
+        public ScrapeRepository(IOptionsSnapshot<ScrapeDataSettings> options)
         {
+            theMorningDewSettings = options.Get("TheMorningDew");
             web = new HtmlWeb();
         }
         public List<ScrapeData> GetTheMorningDewData()
         {
-            var url = @"https://www.alvinashcraft.com/";
+            var url = theMorningDewSettings.Url;
             var htmlDoc = web.Load(url);
-            var nodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='entry-content']/ul[1]/li/a[@href]");
+            var nodes = htmlDoc.DocumentNode.SelectNodes(theMorningDewSettings.TargetNode);
             var scrapedData = new List<ScrapeData>();
             foreach (var node in nodes)
             {
