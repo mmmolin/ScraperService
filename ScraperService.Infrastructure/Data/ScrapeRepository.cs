@@ -24,9 +24,9 @@ namespace ScraperService.Infrastructure.Data
             var scrapedData = new List<ScrapeData>();
             foreach (var node in nodes)
             {
-                if (!String.IsNullOrEmpty(node.InnerText) && !String.IsNullOrEmpty(node.GetAttributeValue("href", String.Empty)))
+                if (!String.IsNullOrEmpty(node.InnerText) && !String.IsNullOrEmpty(node.GetAttributeValue(theMorningDewSettings.AttributeName, String.Empty)))
                 {
-                    var data = new ScrapeData(node.InnerText, node.GetAttributeValue("href", String.Empty), DateTime.Now);
+                    var data = new ScrapeData(node.InnerText, node.GetAttributeValue(theMorningDewSettings.AttributeName, String.Empty), DateTime.Now);
                     scrapedData.Add(data);
                 }
                 else
